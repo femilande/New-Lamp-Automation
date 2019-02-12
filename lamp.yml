@@ -1,0 +1,80 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: gather ec2 facts
+    action: ec2_facts
+
+  - name: install apache on redhat or centos instances
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: install apache on debian or ubuntu instances
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debian"
+
+  - name: enable apache on startup and start service for redhat or centos
+    service: name=httpd enabled=yes state=started
+    when: ansible_os_family == "RedHat"
+
+  - name: enable apache on startup and start service for debian or ubuntu
+    service: name=apache2 enabled=yes state=started
+    when: ansible_os_family == "Debian"
+
+  - name: install mariadb for centos
+    yum: name=mariadb-server state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: enable and start Mariadb Services
+    service: name=mariadb enabled=yes state=started
+    when: ansible_os_family == "RedHat"
+
+  - name: install mariadb for redhat
+    apt: name=mariadb-server state=present
+    when: ansible_os_family == "Debian"
+
+  - name: enable and start Mariadb Services
+    service: name=mariadb enabled=yes state=started
+    when: ansible_os_family == "Debian"
+
+  - name: Install php-mysql
+    yum: name=php-mysql state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Install php-xml
+    yum: name=php-xml state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: Install php mbstring
+    yum: name=php-mbstring
+    when: ansible_os_family == "RedHat"
+
+  - name: Install php imap
+    yum: name=php-imap state=present
+    when: ansible_os_family == "RedHat"
+
+  - name: enable and restart httpd services
+    service: name=httpd enabled=yes state=started
+    when: ansible_os_family == "RedHat"
+
+  - name: Install php-mysql
+    apt: name=php-mysql state=present
+    when: ansible_os_family == "Debian"
+
+  - name: Install php-xml
+    apt: name=php-xml state=present
+    when: ansible_os_family == "Debian"                               
+                                    
+  - name: Install php mbstring
+    apt: name=php-mbstring
+    when: ansible_os_family == "Debian"
+
+  - name: Install php imap
+    apt: name=php-imap state=present
+    when: ansible_os_family == "Debian"
+
+  - name: enable and start
+    service: name=httpd enabled=yes state=started
+    when: ansible_os_family == "Debian"

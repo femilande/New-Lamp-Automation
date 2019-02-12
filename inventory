@@ -1,0 +1,7 @@
+
+[Localhost]
+192.168.33.50 ansible_connection=ssh ansible_ssh_user=vangrant ansible_ssh_private_key_file=mykey host_key_checking=False
+
+[servers]
+3.81.21.161 ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mykey host_key_checking=False
+3.94.134.93 ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=mykey host_key_checking=False
